@@ -115,3 +115,14 @@ class VerifyEmailSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
+
+
+class ConfirmEmailVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    verification_code = serializers.CharField(max_length=8, required=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass

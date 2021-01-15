@@ -18,6 +18,8 @@ The main features of this project is:
     - Password Change API
     - Forget Password API
     - Forget Password Confirmation API
+    - Verify Email API
+    - Confirm Email Verification API
 - and much more
 
 ## Database design
@@ -44,7 +46,7 @@ The main features of this project is:
 
 ## Api Documentation
 ### Account
-#### Register Api
+#### Verify Email Api
 - URL endpoint: api/account/auth/verify-email/
 - Authentication required: False
 - Request method: POST
@@ -66,6 +68,41 @@ The main features of this project is:
         "error": "This email is already taken.",
         "details": [
             "email: Email already taken. Please provide a unique email."
+        ]
+    }
+    ```
+    or
+    ```json
+    {
+        "error": "Invalid request format.",
+        "details": [
+            "email: This field is required."
+        ]
+    }
+    ```
+#### Confirm Email Verification Api
+- URL endpoint: api/account/auth/confirm-email-verification/
+- Authentication required: False
+- Request method: POST
+- Request:
+    ```json
+    {
+        "email": "hello@gmail.com",
+        "verification_code": "XMPQUE"
+    }
+    ```
+- Response:
+    ```json
+    {
+        "detail": "Success! Email is verified."
+    }
+    ```
+    or
+    ```json
+    {
+        "error": "Security code invalid or expired./Email and token mismatch.",
+        "details": [
+            "The code you provided is invalid. Please provide a valid code."
         ]
     }
     ```

@@ -68,6 +68,25 @@ class AuthViewSet(viewsets.GenericViewSet):
             data = get_error(string_constants.EMAIL_TAKEN, get_error_details(serializer.errors))
         return Response(data=data, status=status.HTTP_200_OK)
 
+    @action(methods=['POST', ], detail=False, url_path='confirm-email-verification')
+    def confirm_email_verification(self, request):
+        serializer = serializers.ConfirmEmailVerificationSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                token = TokenManager.objects.get(email=serializer.validated_data['email'], key=serializer.validated_data['verification_code'])
+                if token.validate_token():
+                    data = {'detail': 'Success! Email is verified.'}
+                else:
+                    data = get_error(
+                        string_constants.TOKEN_INVALID,
+                        ['The code you provided has expired. Please request a new one.']
+                    )
+            except ObjectDoesNotExist:
+                data = get_error(string_constants.EMAIL_TOKEN_MISMATCH, get_error_details(serializer.errors))
+        else:
+            data = get_error(string_constants.EMAIL_TOKEN_MISMATCH, get_error_details(serializer.errors))
+        return Response(data=data, status=status.HTTP_200_OK)
+
     @action(methods=['POST'], detail=False, url_path='register')
     def register(self, request):
         serializer = serializers.RegistrationSerializer(data=request.data)
