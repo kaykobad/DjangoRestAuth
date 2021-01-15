@@ -131,3 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Custom Settings
+PASSWORD_RESET_OTP_TIMEOUT = 86400
