@@ -63,9 +63,9 @@ class AuthViewSet(viewsets.GenericViewSet):
         if serializer.is_valid():
             obj = serializer.save()
             # TODO: Update these two methods in account.User model
-            obj.send_email()
-            obj.send_sms()
-            data = {'detail': 'Success! Your registration request is successful.'}
+            obj.email_user(subject="Registration Successful!", message=f"Congrats {obj.first_name}!\n\nYour registration is successful! \n\nThanks")
+            # obj.send_sms()
+            data = serializers.AuthUserSerializer(obj).data
         else:
             data = get_error(string_constants.INVALID_REQUEST_FORMAT, get_error_details(serializer.errors))
         return Response(data=data, status=status.HTTP_200_OK)
@@ -77,7 +77,7 @@ class AuthViewSet(viewsets.GenericViewSet):
             receiver_email = serializer.validated_data['email']
             if USER.objects.filter(email=receiver_email).exists():
                 token = TokenManager.objects.create(email=receiver_email)
-                token.send_email()
+                token.send_email(subject="Password Reset Request", message=f"Your password reset code is: {token.key} \n\n This code expires in 24 hours.\n\n Thanks")
 
             data = {'detail': 'Success! You will receive an email shortly if you are registered. Check your inbox for password reset token.'}
         else:

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import string
-from random import random
+import random
 
 from django.conf import settings
 from django.db import models
@@ -66,7 +66,7 @@ class TokenManager(models.Model):
 
     @classmethod
     def generate_key(cls):
-        return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
     def __str__(self):
         return self.key + ' - ' + self.email
@@ -79,7 +79,7 @@ class TokenManager(models.Model):
         else:
             return False
 
-    def email_user(self, subject, message, from_email=settings.DEFAULT_FROM_EMAIL, **kwargs):
+    def send_email(self, subject, message, from_email=settings.DEFAULT_FROM_EMAIL, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def send_sms(self, sms_text):
