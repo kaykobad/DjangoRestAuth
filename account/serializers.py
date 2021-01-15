@@ -13,6 +13,17 @@ class EmptySerializer(serializers.Serializer):
         pass
 
 
+class ErrorSerializer(serializers.Serializer):
+    error = serializers.CharField(max_length=1024, required=True)
+    details = serializers.ListField(child=serializers.CharField(max_length=1024), required=False)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+
+
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     password = serializers.CharField(required=True, write_only=True)
