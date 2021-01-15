@@ -57,6 +57,17 @@ class AuthViewSet(viewsets.GenericViewSet):
             data = get_error(string_constants.INVALID_REQUEST_FORMAT, get_error_details(serializer.errors))
         return Response(data=data, status=status.HTTP_200_OK)
 
+    @action(methods=['POST', ], detail=False, url_path='verify-email')
+    def verify_email(self, request):
+        serializer = serializers.VerifyEmailSerializer(data=request.data)
+        if serializer.is_valid():
+            token = TokenManager.objects.create(email=serializer.validated_data['email'])
+            token.send_email(subject="Email Verification", message=f"Your email verification code is: {token.key} \n\n This code expires in 24 hours.\n\n Thanks")
+            data = {"success": "An email with a verification code is sent to the email."}
+        else:
+            data = get_error(string_constants.EMAIL_TAKEN, get_error_details(serializer.errors))
+        return Response(data=data, status=status.HTTP_200_OK)
+
     @action(methods=['POST'], detail=False, url_path='register')
     def register(self, request):
         serializer = serializers.RegistrationSerializer(data=request.data)

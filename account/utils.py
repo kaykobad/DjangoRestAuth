@@ -28,7 +28,7 @@ def get_error_details(error_dict):
 def get_user_not_found_error():
     data = get_error(
         string_constants.INVALID_LOGIN_CREDENTIAL,
-        ['The username and password do not match. Please try with a valid combination.']
+        ['The email and password do not match. Please try with a valid combination.']
     )
     return data
 

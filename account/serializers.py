@@ -99,3 +99,19 @@ class AuthUserSerializer(serializers.ModelSerializer):
         model = USER
         fields = ('id', 'email', 'first_name', 'last_name', 'auth_token', 'date_joined', 'phone_number')
         read_only_fields = ('id', 'email', 'first_name', 'last_name', 'auth_token', 'date_joined', 'phone_number')
+
+
+# noinspection PyMethodMayBeStatic
+class VerifyEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate_email(self, value):
+        if USER.objects.filter(email=value).exists():
+            raise serializers.ValidationError('Email already taken. Please provide a unique email.')
+        return value
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass

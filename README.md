@@ -32,6 +32,8 @@ The main features of this project is:
 | Date Joined                             | Date Time                     |
 | Last Login                              | Date Time                     |
 | Phone Number                            | String                        |
+| Is Active                               | Boolean                       |
+| Is Staff                                | Boolean                       |
 
 #### Token Manager
 | Attribute                               | Data Type                     |
@@ -42,6 +44,40 @@ The main features of this project is:
 
 ## Api Documentation
 ### Account
+#### Register Api
+- URL endpoint: api/account/auth/verify-email/
+- Authentication required: False
+- Request method: POST
+- Request:
+    ```json
+    {
+        "email": "hello@gmail.com"
+    }
+    ```
+- Response:
+    ```json
+    {
+        "success": "An email with a verification code is sent to the email."
+    }
+    ```
+    or
+    ```json
+    {
+        "error": "This email is already taken.",
+        "details": [
+            "email: Email already taken. Please provide a unique email."
+        ]
+    }
+    ```
+    or
+    ```json
+    {
+        "error": "Invalid request format.",
+        "details": [
+            "email: This field is required."
+        ]
+    }
+    ```
 #### Register Api
 - URL endpoint: api/account/auth/register/
 - Authentication required: False
@@ -71,9 +107,9 @@ The main features of this project is:
     or
     ```json
     {
-        "error": "Invalid username or password.",
+        "error": "Invalid email or password.",
         "details": [
-            "The username and password do not match. Please try with a valid combination."
+            "The email and password do not match. Please try with a valid combination."
         ]
     }
     ```
@@ -82,7 +118,7 @@ The main features of this project is:
     {
         "error": "Invalid request format.",
         "details": [
-            "username: This field is required.",
+            "email: This field is required.",
             "password: This field is required."
         ]
     }
@@ -113,9 +149,9 @@ The main features of this project is:
     or
     ```json
     {
-        "error": "Invalid username or password.",
+        "error": "Invalid email or password.",
         "details": [
-            "The username and password do not match. Please try with a valid combination."
+            "The email and password do not match. Please try with a valid combination."
         ]
     }
     ```
@@ -124,7 +160,7 @@ The main features of this project is:
     {
         "error": "Invalid request format.",
         "details": [
-            "username: This field is required.",
+            "email: This field is required.",
             "password: This field is required."
         ]
     }
