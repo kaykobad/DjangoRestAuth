@@ -1,3 +1,45 @@
+# Django Rest Auth
+## Introduction
+This project is intended to be used as a scaffold project for all my upcoming django
+projects. It contains the basic REST API's that all projects need. Along with a custom
+user model and user manager, it contains the ability to verify email, email on registration, 
+send sms to user, all the API's related to REST authentication and much more. In a word,
+this project is everything you need to kick-start your Django REST project.
+
+## Features
+The main features of this project is:
+- Custom User model and User Manager for easier extension 
+- Send email and send sms functionality
+- Custom token generation for verification and password reset
+- REST API's for complete authentication process
+    - Register API
+    - Login API
+    - Logout API
+    - Password Change API
+    - Forget Password API
+    - Forget Password Confirmation API
+- and much more
+
+## Database design
+### Account
+#### User
+| Attribute                               | Data Type                     |
+|:----------------------------------------|:------------------------------|
+| Password                                | String                        |
+| Email                                   | Email                         |
+| First name                              | String                        |
+| Last name                               | String                        |
+| Date Joined                             | Date Time                     |
+| Last Login                              | Date Time                     |
+| Phone Number                            | String                        |
+
+#### Token Manager
+| Attribute                               | Data Type                     |
+|:----------------------------------------|:------------------------------|
+| Key                                     | String                        |
+| Email                                   | Email                         |
+| Date Created                            | Date Time                     |
+
 ## Api Documentation
 ### Account
 #### Register Api
