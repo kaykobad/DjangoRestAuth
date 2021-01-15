@@ -45,9 +45,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name
 
-    def email_user(self, subject, message, **kwargs):
-        # send_mail(subject, message, from_email, [self.email], **kwargs)
-        pass
+    def email_user(self, subject, message, from_email=settings.DEFAULT_FROM_EMAIL, **kwargs):
+        send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def send_sms(self, sms_text):
         # TODO: Add sms sending text here
@@ -74,15 +73,14 @@ class TokenManager(models.Model):
 
     def validate_token(self):
         seconds_diff = (timezone.now() - self.date_created).total_seconds()
-        if seconds_diff < settings.PASSWORD_RESET_OTP_TIMEOUT:
+        if seconds_diff < settings.TOKEN_TIMEOUT:
             self.delete()
             return True
         else:
             return False
 
-    def email_user(self, subject, message, **kwargs):
-        # send_mail(subject, message, from_email, [self.email], **kwargs)
-        pass
+    def email_user(self, subject, message, from_email=settings.DEFAULT_FROM_EMAIL, **kwargs):
+        send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def send_sms(self, sms_text):
         # TODO: Add sms sending text here

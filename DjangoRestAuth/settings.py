@@ -134,4 +134,15 @@ STATIC_URL = '/static/'
 
 
 # Custom Settings
-PASSWORD_RESET_OTP_TIMEOUT = 86400
+
+# Token Timeout Settings
+TOKEN_TIMEOUT = 86400
+
+# Email Settings for Google SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'youremail@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourgmailkey'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'postman@kaykobad.com'
