@@ -91,7 +91,7 @@ class AuthViewSet(viewsets.GenericViewSet):
     def register(self, request):
         serializer = serializers.RegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            obj = serializer.save()
+            obj = USER.objects.create_user(**serializer.validated_data)
             # TODO: Update these two methods in account.User model
             obj.email_user(subject="Registration Successful!", message=f"Congrats {obj.first_name}!\n\nYour registration is successful! \n\nThanks")
             # obj.send_sms()
